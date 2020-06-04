@@ -19,7 +19,8 @@ class CreateVendasTable extends Migration
             $table->foreign('id_cliente')
                 ->references('id')
                 ->on('clientes')
-                ->onDelete('cascade');
+                ->onDelete('RESTRICT')
+                ->onUpdate('CASCADE');
             $table->float('valor',5,2);
             $table->date('data_venda');
             $table->timestamps();

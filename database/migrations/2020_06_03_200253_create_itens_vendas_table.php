@@ -20,12 +20,14 @@ class CreateItensVendasTable extends Migration
             $table->foreign('id_produto')
                 ->references('id')
                 ->on('produtos')
-                ->onDelete('cascade');
+                ->onDelete('RESTRICT')
+                ->onUpdate('CASCADE');
             $table->bigInteger('id_venda')->unsigned();
             $table->foreign('id_venda')
                 ->references('id')
                 ->on('vendas')
-                ->onDelete('cascade');
+                ->onDelete('RESTRICT')
+                ->onUpdate('CASCADE');
             $table->date('data_venda');
             $table->timestamps();
         });
