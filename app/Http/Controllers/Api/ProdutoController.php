@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class ClienteControler extends Controller
+class ProdutoController extends Controller
 {
     //
 }
