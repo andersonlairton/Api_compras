@@ -8,5 +8,5 @@ class Cliente extends Model
 {
     protected $table = 'clientes';
     public $timestamps = true;
-    protected $fillable = ['cpf/cnpj','nome','data_cadastro']; 
+    protected $fillable = ['nome','cpf_cnpj','data_cadastro']; 
 }
