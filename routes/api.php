@@ -20,7 +20,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //rotas api
 //clientes
-Route::post('/cadastrarCliente','Api\ClienteController@create');
-Route::get('/listarCliente','Api\ClienteController@index');
-Route::put('/alterarCliente/{id}','Api\ClienteController@update');
-Route::delete('/excluirCliente/{id}','Api\ClienteController@destroy');
+Route::namespace('Api')->group(function () {
+    Route::post('/cadastrarCliente', 'ClienteController@create');
+    Route::get('/listarCliente', 'ClienteController@index');
+    Route::get('/listarCliente/{id}', 'ClienteController@show');
+    Route::put('/editarCliente/{id}', 'ClienteController@update');
+    Route::delete('/excluirCliente/{id}', 'ClienteController@destroy');
+});

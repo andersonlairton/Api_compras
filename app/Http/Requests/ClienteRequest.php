@@ -13,7 +13,7 @@ class ClienteRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,18 @@ class ClienteRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'nome'=>'required|min:3|max:255',
+            'cpf_cnpj'=>'required|min:11|max:14'
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'required'=>':atrribute não pode ser vazio',
+            'nome.min'=>'nome não deve ser menor que 3 caracteres',
+            'nome.max'=>'nome não pode ser maior que 255 caracteres',
+            'cpf_cnpj.min'=>'cpf/cnpj não pode ser menor que 11 caracteres',
+            'cpf_cnpj.max'=>'cpf/cnpj não pode ser maior que 14 caracteres',
         ];
     }
 }

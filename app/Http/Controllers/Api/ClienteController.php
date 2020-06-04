@@ -3,18 +3,27 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ClienteRequest;
+use App\Model\Cliente;
+use Exception;
 use Illuminate\Http\Request;
 
 class ClienteController extends Controller
 {
     public function index()
     {
-        return ['status'=>'metodo index'];
+        $clientes = Cliente::all();
+        return $clientes;
     }
 
-    public function create()
+    public function create(ClienteRequest $dados)
     {
-        return ['status'=>'metodo create'];
+        try {
+            Cliente::create($dados->all());
+            return ['status' => 'cadastro realizado com sucesso'];
+        } catch (Exception $erro) {
+            return ['erro ao cadastrar usuario' => $erro];
+        }
     }
 
     public function store(Request $request)
@@ -23,21 +32,37 @@ class ClienteController extends Controller
     }
     public function show($id)
     {
-        return ['status'=>'metodo show id '.$id];
+        $cli = Cliente::find($id);
+        if (empty($cli)) {
+            return ['status' => 'id invalido'];
+        }
+        return $cli;
     }
 
     public function edit($id)
     {
-        return ['status'=>"metodo edit id ".$id];
+        //
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $dados, $id)
     {
-        return ['staatus'=>'metodo update id '.$id];
+        $cli = Cliente::find($id);
+
+        if (!empty($cli)) {
+            try {
+                $cli->update($dados->all());
+                return ['status' => 'sucesso'];
+            } catch (Exception $erro) {
+                return ['erro' => $erro];
+            }
+        } else {
+            return ['status' => 'usuario invalido'];
+        }
     }
 
     public function destroy($id)
     {
-        return['status'=>'metodo destry id '.$id];
+        $cli = Cliente::find($id)->delete();
+        return ['status' => 'deletado o  ' . $id];
     }
 }
