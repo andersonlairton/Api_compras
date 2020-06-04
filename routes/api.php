@@ -19,4 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //rotas api
-Route::get('/cadastrarCliente','Api\ClienteController@create');
+//clientes
+Route::post('/cadastrarCliente','Api\ClienteController@create');
+Route::get('/listarCliente','Api\ClienteController@index');
+Route::put('/alterarCliente/{id}','Api\ClienteController@update');
+Route::delete('/excluirCliente/{id}','Api\ClienteController@destroy');
