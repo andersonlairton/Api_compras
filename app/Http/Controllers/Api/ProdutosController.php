@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ProdutoRequest;
+use App\Model\Produto;
+use Exception;
 use Illuminate\Http\Request;
 
 class ProdutosController extends Controller
@@ -14,7 +17,8 @@ class ProdutosController extends Controller
      */
     public function index()
     {
-        //
+        $prod = Produto::all();
+        return $prod;
     }
 
     /**
@@ -22,9 +26,14 @@ class ProdutosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(ProdutoRequest $produto)
     {
-        //
+        try {
+            Produto::create($produto->all());
+            return ['status' => 'produto cadastrado com sucesso'];
+        } catch (Exception $erro) {
+            return ['erro' => $erro];
+        }
     }
 
     /**
@@ -46,7 +55,11 @@ class ProdutosController extends Controller
      */
     public function show($id)
     {
-        //
+        $produto = Produto::find($id);
+        if (empty($produto)) {
+            return ['status' => 'produto invalido'];
+        }
+        return $produto;
     }
 
     /**
@@ -67,9 +80,20 @@ class ProdutosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $produto, $id)
     {
-        //
+        $prod = Produto::find($id);
+
+        if (!empty($prod)) {
+            try {
+                $prod->update($produto->all());
+                return ['status' => 'sucesso'];
+            } catch (Exception $erro) {
+                return ['erro' => $erro];
+            }
+        } else {
+            return ['status' => 'produto invalido'];
+        }
     }
 
     /**
@@ -80,6 +104,7 @@ class ProdutosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $cli = Produto::find($id)->delete();
+        return ['status' => 'deletado o produto ' . $id];
     }
 }
