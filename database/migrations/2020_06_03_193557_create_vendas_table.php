@@ -15,13 +15,13 @@ class CreateVendasTable extends Migration
     {
         Schema::create('vendas', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('id_cliente')->unsigned();
+            $table->integer('id_cliente')->unsigned();
             $table->foreign('id_cliente')
                 ->references('id')
                 ->on('clientes')
                 ->onDelete('RESTRICT')
                 ->onUpdate('CASCADE');
-            $table->float('valor',5,2);
+            $table->float('valor');
             $table->date('data_venda');
             $table->timestamps();
         });
