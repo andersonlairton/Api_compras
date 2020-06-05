@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ClienteRequest;
 use App\Model\Cliente;
+use App\Model\Venda;
 use Exception;
 use Illuminate\Http\Request;
 
@@ -62,7 +63,18 @@ class ClienteController extends Controller
 
     public function destroy($id)
     {
-        $cli = Cliente::find($id)->delete();
-        return ['status' => 'deletado o  ' . $id];
+        try{
+            
+            $cli = Cliente::find($id);
+            if(!empty($cli)){
+                $cli->delete($id);
+                return ['status' => 'deletado o  ' . $id];
+            }else{
+                return['erro'=>'cliente invalido'];
+            }
+            
+        }catch(Exception $erro){
+            return ['status'=>'não é possivel deletar um cliente que possui venda'];
+        }
     }
 }
