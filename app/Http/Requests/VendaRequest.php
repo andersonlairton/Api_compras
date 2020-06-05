@@ -13,7 +13,7 @@ class VendaRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,16 @@ class VendaRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'id_cliente'=>'required|integer',
+            'valor'=>'required|numeric',
+        ];
+    }
+    public function messages()
+    {
+        return [
+            'required'=>':attribute não pode ser vazio',
+            'valor.numeric'=>'valor deve ser um numero ',
+            'id_cliente.integer'=>'id cliente deve ser um numero',
         ];
     }
 }
