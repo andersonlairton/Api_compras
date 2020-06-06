@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 
-class Itens_VendaController extends Controller
+class ItensVendaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +24,7 @@ class Itens_VendaController extends Controller
      */
     public function create()
     {
-        //
+        return ['status'=>'metodo create itens venda'];
     }
 
     /**
