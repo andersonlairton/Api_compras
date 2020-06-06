@@ -19,20 +19,26 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 //rotas api
-//clientes
-
-
 Route::namespace('Api')->group(function () {
-    
+    //clientes
     Route::post('/cadastrarCliente', 'ClienteController@create');
     Route::get('/listarCliente', 'ClienteController@index');
     Route::get('/listarCliente/{id}', 'ClienteController@show');
     Route::put('/editarCliente/{id}', 'ClienteController@update');
     Route::delete('/excluirCliente/{id}', 'ClienteController@destroy');
-    
+    //produtos
     Route::get('/listarprodutos','ProdutosController@index');
     Route::get('listarprodutos/{id}','ProdutosController@show');
     Route::post('/cadastrarproduto', 'ProdutosController@create');
     Route::put('/editarproduto/{id}', 'ProdutosController@update');
     Route::delete('/excluirproduto/{id}', 'ProdutosController@destroy');
+    //vendas
+    Route::get('/listarvendas','VendasController@index');
+    Route::get('/listarvendas/{id}','VendasController@show');
+    Route::post('/novavenda', 'VendasController@create');
+    Route::put('/alterarclientevenda/{id}','VendasController@alterarCliente');
+    Route::put('/finalizarvenda/{id}','VendasController@finalizarvenda');
+    //itens venda
+    Route::post('/adicionarprodutos','ItensVendaController@create');
+    Route::get('/listarprodutosvenda/{id}','ItensVendaController@show');
 });
