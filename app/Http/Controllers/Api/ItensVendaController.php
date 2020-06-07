@@ -3,7 +3,13 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\ItensVendaRequest;
+use App\Model\ItensVenda;
+use App\Model\Produto;
+use App\Model\Venda;
+use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ItensVendaController extends Controller
 {
@@ -22,7 +28,7 @@ class ItensVendaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(ItensVendaRequest $itens)
     {
         $prod = Produto::find($itens->id_produto);
         $venda = Venda::find($itens->id_venda);
@@ -88,9 +94,15 @@ class ItensVendaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ItensVendaRequest $dados, $id)
     {
-        //
+        $itens = ItensVenda::find($id);
+        $venda = Venda::find($dados->id_venda);
+        var_dump($venda->id);
+        die;
+        $itens->update($dados->all());
+        //var_dump($itens->quantidade_vendida);
+        //return $dados;
     }
 
     /**
