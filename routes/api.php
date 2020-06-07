@@ -35,10 +35,11 @@ Route::namespace('Api')->group(function () {
     //vendas
     Route::get('/listarvendas','VendasController@index');
     Route::get('/listarvendas/{id}','VendasController@show');
+    Route::get('/listarprodutosvenda/{id}','VendasController@listar_produtos');
     Route::post('/novavenda', 'VendasController@create');
     Route::put('/alterarclientevenda/{id}','VendasController@alterarCliente');
     Route::put('/finalizarvenda/{id}','VendasController@finalizarvenda');
     //itens venda
     Route::post('/adicionarprodutos','ItensVendaController@adicionarproduto');
-    Route::get('/listarprodutosvenda/{id}','ItensVendaController@show');
+   
 });

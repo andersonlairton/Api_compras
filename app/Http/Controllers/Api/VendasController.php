@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\VendaRequest;
 use App\Model\Cliente;
+use App\Model\ItensVenda;
 use App\Model\Venda;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class VendasController extends Controller
 {
@@ -58,13 +60,24 @@ class VendasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function listar_produtos($id)
     {
         $venda = Venda::find($id);
+        //ItensVenda::where('id_venda', $itens->id_venda)->where('id_produto', $itens->id_produto)->get();
+        // var_dump($id);
+        //die;
+        //var_dump($produtos);
+
         if (empty($venda)) {
             return ['erro' => 'id invalido'];
         }
-        return $venda;
+        $produtos = DB::select('SELECT descricao,quantidade_vendida,valor FROM itens_vendas,produtos WHERE id_venda=? AND produtos.id=itens_vendas.id_produto', [$id]);
+        // return $produtos;
+        // die;
+        return [
+            'venda' => $venda,
+            'produtos' => $produtos
+        ];
         // return ['status'=>'metodo show vendas com o id '.$id];
     }
 
@@ -93,24 +106,22 @@ class VendasController extends Controller
     public function alterarCliente(Request $dados, $id)
     {
         $venda = $this->show($id);
-        
-        if (empty($venda->data_venda)&&!isset($venda['erro'])) {
+
+        if (empty($venda->data_venda) && !isset($venda['erro'])) {
             $cliente = Cliente::find($dados->id_cliente);
             if (!empty($cliente)) {
                 try {
                     $venda->update($dados->all());
-                    return ['status'=>'cliente alterado com sucesso'];
+                    return ['status' => 'cliente alterado com sucesso'];
                 } catch (Exception $erro) {
                     return $erro;
                 }
             } else {
                 return ['erro' => 'cliente invalido'];
             }
-        }else if(isset($venda['erro']))
-        {
-            return ['erro'=>'venda nao existe no banco de dados'];
-        } 
-        else {
+        } else if (isset($venda['erro'])) {
+            return ['erro' => 'venda nao existe no banco de dados'];
+        } else {
             return ['status' => 'venda finaliza,cliente nao pode ser alterado'];
         }
     }
