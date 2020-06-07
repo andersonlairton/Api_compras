@@ -39,6 +39,6 @@ Route::namespace('Api')->group(function () {
     Route::put('/alterarclientevenda/{id}','VendasController@alterarCliente');
     Route::put('/finalizarvenda/{id}','VendasController@finalizarvenda');
     //itens venda
-    Route::post('/adicionarprodutos','ItensVendaController@create');
+    Route::post('/adicionarprodutos','ItensVendaController@adicionarproduto');
     Route::get('/listarprodutosvenda/{id}','ItensVendaController@show');
 });

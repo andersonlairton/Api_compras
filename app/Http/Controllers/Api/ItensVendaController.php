@@ -28,7 +28,7 @@ class ItensVendaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(ItensVendaRequest $itens)
+    public function adicionarproduto(ItensVendaRequest $itens)
     {
         $prod = Produto::find($itens->id_produto);
         $venda = Venda::find($itens->id_venda);
@@ -39,11 +39,22 @@ class ItensVendaController extends Controller
         } else if ($itens->quantidade_vendida > $prod->quantidade_estoque) {
             return ['erro' => 'quantidade vendida não pode ser maior que a quantidade em estoque'];
         } else if (!empty($itensVenda->pluck('id')->toArray())) {
+            $quantidade = $itensVenda->pluck('quantidade_vendida')->toArray();
+            $quantidade = array_shift($quantidade);
+
+            if ($quantidade > $itens->quantidade_vendida) {
+                $total_venda = $venda->valor - ($prod->valor * ($quantidade - $itens->quantidade_vendida));
+            } else {
+                $total_venda = $venda->valor + (($prod->valor * $itens->quantidade_vendida) - ($prod->valor * $quantidade));
+            }
+
+            $venda->update(['valor' => $total_venda]);
 
             $id_item = $itensVenda->pluck('id')->toArray();
             $id_item = array_shift($id_item);
+            ItensVenda::find($id_item)->update($itens->all());
 
-            return $this->update($itens, $id_item);
+            return ['status' => 'quantidade alterado com sucesso'];
         } else {
             $itens['data_venda'] = new DateTime();
             $total_venda = $venda->valor + ($prod->valor * $itens->quantidade_vendida);
