@@ -24,7 +24,28 @@ class ItensVendaController extends Controller
      */
     public function create()
     {
-        return ['status'=>'metodo create itens venda'];
+        $prod = Produto::find($itens->id_produto);
+        $venda = Venda::find($itens->id_venda);
+        $itensVenda = ItensVenda::where('id_venda', $itens->id_venda)->where('id_produto', $itens->id_produto)->get();
+
+        if (empty($venda) || !empty($venda->data_venda)) {
+            return ['erro' => 'não é possivel adicionar produtos a esta venda'];
+        } else if ($itens->quantidade_vendida > $prod->quantidade_estoque) {
+            return ['erro' => 'quantidade vendida não pode ser maior que a quantidade em estoque'];
+        } else if (!empty($itensVenda->pluck('id')->toArray())) {
+
+            $id_item = $itensVenda->pluck('id')->toArray();
+            $id_item = array_shift($id_item);
+
+            return $this->update($itens, $id_item);
+        } else {
+            $itens['data_venda'] = new DateTime();
+            $total_venda = $venda->valor + ($prod->valor * $itens->quantidade_vendida);
+            $venda->update(['valor' => $total_venda]);
+            ItensVenda::create($itens->all());
+
+            return ['status' => 'produto adicionado com sucesso'];
+        }
     }
 
     /**
