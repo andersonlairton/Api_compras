@@ -104,7 +104,11 @@ class ProdutosController extends Controller
      */
     public function destroy($id)
     {
-        $cli = Produto::find($id)->delete();
-        return ['status' => 'deletado o produto ' . $id];
+        try {
+            Produto::find($id)->delete();
+            return ['status' => 'deletado o produto ' . $id];
+        } catch (Exception $erro) {
+            return ['status' => 'produto não pode ser apagado quando o mesmo consta em uma venda'];
+        }
     }
 }
