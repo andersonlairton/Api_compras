@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\VendaRequest;
 use App\Model\Cliente;
 use App\Model\ItensVenda;
+use App\Model\Produto;
 use App\Model\Venda;
+use DateTime;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -128,7 +130,27 @@ class VendasController extends Controller
 
     public function finalizarvenda($id)
     {
-        return ['status' => 'metodo finalizar venda'];
+        $venda = Venda::find($id);
+
+        if (empty($venda->data_venda)) {
+
+            $itens = ItensVenda::where('id_venda', $id)->get();
+
+            foreach ($itens->pluck('id_produto')->toArray() as $key => $value) {
+                $prod = Produto::find($value);
+                $qtdVendida = $itens->pluck('quantidade_vendida')->toArray();
+                $qtdVendida = array_shift($qtdVendida);
+
+                $prod->quantidade_estoque = $prod->quantidade_estoque - $qtdVendida;
+
+                $prod->update(['quantidade_estoque' => $prod->quantidade_estoque]);
+            }
+            $venda->data_venda = new DateTime();
+            $venda->update(['data_venda' => $venda->data_venda]);
+            return ['status' => 'venda finalizada com sucesso'];
+        } else {
+            return ['erro' => 'venda ja finalizada'];
+        }
     }
 
     /**
