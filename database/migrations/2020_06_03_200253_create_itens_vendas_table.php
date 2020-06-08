@@ -28,7 +28,7 @@ class CreateItensVendasTable extends Migration
                 ->on('vendas')
                 ->onDelete('RESTRICT')
                 ->onUpdate('CASCADE');
-            $table->date('data_venda');
+            $table->timestamps('data_venda');
             $table->timestamps();
         });
     }

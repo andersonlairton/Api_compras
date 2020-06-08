@@ -22,7 +22,7 @@ class CreateVendasTable extends Migration
                 ->onDelete('RESTRICT')
                 ->onUpdate('CASCADE');
             $table->float('valor');
-            $table->date('data_venda');
+            $table->timestamps('data_venda');
             $table->timestamps();
         });
     }
