@@ -64,6 +64,22 @@ class ItensVendaController extends Controller
             return ['status' => 'produto adicionado com sucesso'];
         }
     }
+    public function remover($id_venda, $id_item)
+    {
+        $venda = Venda::find($id_venda);
+        $item = ItensVenda::where('id_venda', $id_venda)->where('id_produto', $id_item)->first();
+
+        if (isset($item->id) && !isset($venda->data_venda)) {
+            $prod = Produto::find($id_item);
+
+            $venda_valor = $venda->valor - ($prod->valor * $item->quantidade_vendida);
+            $venda->update(['valor' => $venda_valor]);
+            $item->delete($item->all());
+            return ['status' => 'produto removido com sucesso'];
+        } else {
+            return ['erro' => 'não é possivel remover produtos desta venda'];
+        }
+    }
 
     /**
      * Store a newly created resource in storage.
