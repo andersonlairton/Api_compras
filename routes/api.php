@@ -42,5 +42,5 @@ Route::namespace('Api')->group(function () {
     //itens venda
     Route::post('/adicionarprodutos','ItensVendaController@adicionarproduto');
     Route::delete('/removerproduto/{venda}/{produto}','ItensVendaController@remover');
-   
+    Route::delete('/removerproduto/{venda}','ItensVendaController@remover_todos');
 });

@@ -80,6 +80,22 @@ class ItensVendaController extends Controller
             return ['erro' => 'não é possivel remover produtos desta venda'];
         }
     }
+    public function remover_todos($id_venda)
+    {
+        $venda = Venda::find($id_venda);
+
+        if (empty($venda->data_venda)) {
+
+            $itens = ItensVenda::where('id_venda', $id_venda)->get();
+
+            foreach ($itens->pluck('id_produto')->toArray() as $key => $value) {
+                $this->remover($id_venda,$value);
+            }
+            return ['status' => 'produtos removidos com sucesso'];
+        } else {
+            return ['erro' => 'venda ja finalizada,não é possivel remover produtos desta venda'];
+        }
+    }
 
     /**
      * Store a newly created resource in storage.
