@@ -25,7 +25,7 @@ class ClienteRequest extends FormRequest
     {
         return [
             'nome'=>'required|min:3|max:255',
-            'cpf_cnpj'=>'required|min:11|max:14'
+            'cpf_cnpj'=>'required|min:11|max:18'
         ];
     }
     public function messages()
