@@ -40,8 +40,8 @@ class VendasController extends Controller
         }
         $v =  Venda::create($dados->all());
         return [
-            'status' => 'suesso',
-            'nova venda gravada' => $v->id
+            'status' => 'sucesso',
+            'id_venda' => $v->id
         ];
     }
 
