@@ -54,15 +54,21 @@ class ItensVendaController extends Controller
             $id_item = array_shift($id_item);
             ItensVenda::find($id_item)->update($itens->all());
 
-            return ['status' => 'quantidade alterado com sucesso'];
+            return ['status' => 'quantidade alterado com sucesso',
+            'valor'=>$total_venda];
         } else {
             $itens['data_venda'] = new DateTime();
             $total_venda = $venda->valor + ($prod->valor * $itens->quantidade_vendida);
             $venda->update(['valor' => $total_venda]);
             ItensVenda::create($itens->all());
 
-            return ['status' => 'produto adicionado com sucesso'];
+            return ['status' => 'produto adicionado com sucesso',
+                    'valor'=>$total_venda];
         }
+    }
+    public function editaritem($id_item,ItensVendaRequest $dados)
+    {
+        return ['editar dados do item {$id_item}'];
     }
     public function remover($id_venda, $id_item)
     {
@@ -75,7 +81,8 @@ class ItensVendaController extends Controller
             $venda_valor = $venda->valor - ($prod->valor * $item->quantidade_vendida);
             $venda->update(['valor' => $venda_valor]);
             $item->delete($item->all());
-            return ['status' => 'produto removido com sucesso'];
+            return ['status' => 'produto removido com sucesso',
+                    'valor'=>$venda_valor];
         } else {
             return ['erro' => 'não é possivel remover produtos desta venda'];
         }
