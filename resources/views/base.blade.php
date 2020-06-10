@@ -44,15 +44,24 @@
                     <a class="dropdown-item" href="{{ url('/cliente/acao') }}">Ações</a>
                 </div>
             </li>
-            <ul class="navbar-nav mr-auto">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <li class="navbar-nav mr-auto">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     Vendas
                 </a>
                 <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                     <a class="dropdown-item" href="{{ url('/vendas/criar') }}">Nova Venda</a>
                     <a class="dropdown-item" href="{{ url('/vendas/acao') }}">Ações</a>
                 </div>
-            </ul>
+            </li>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Produtos
+                </a>
+                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="{{ url('/produto/criar') }}">Cadastro</a>
+                    <a class="dropdown-item" href="{{ url('/produto/acao') }}">Ações</a>
+                </div>
+            </li>
         </ul>
     </div>
 </nav>

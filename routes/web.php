@@ -35,3 +35,12 @@ Route::group(['prefix'=>'vendas'],function(){
         return view('vendas.acao');
     });
 });
+Route::group(['prefix'=>'produto'], function(){
+    Route::get('/criar', function () {
+        return view('produto.criar');
+    });
+
+    Route::get('/acao', function () {
+        return view('produto.acao');
+    });
+});
