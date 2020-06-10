@@ -23,18 +23,33 @@ class ItensVendaRequest extends FormRequest
      */
     public function rules()
     {
-        return [
-            'quantidade_vendida'=>'required|numeric',
-            'id_produto'=>'required|integer',
-            'id_venda'=>'required|integer',
-        ];
+       // var_dump($this->method());
+        //die;
+        switch ($this->method()) {
+            case "POST": {
+               
+                    return [
+                        'quantidade_vendida' => 'required|numeric',
+                        'id_produto' => 'required|integer',
+                        'id_venda' => 'required|integer',
+                    ];
+                }
+            case "GET":
+            case "PUT": {
+               // echo 'teste';
+                //die;
+                    return [
+                        'id' => 'required'
+                    ];
+                }
+        }
     }
     public function messages()
     {
-       return [
-            'required'=>':attributte não pode ser vazio',
-            'id_produto.integer'=>'id produto deve ser um inteiro',
-            'id_venda.integer'=>'id venda deve ser um inteiro '
-       ];
+        return [
+            'required' => ':attributte não pode ser vazio',
+            'id_produto.integer' => 'id produto deve ser um inteiro',
+            'id_venda.integer' => 'id venda deve ser um inteiro '
+        ];
     }
 }

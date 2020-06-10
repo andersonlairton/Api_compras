@@ -26,3 +26,12 @@ Route::group(['prefix'=>'cliente'], function(){
         return view('cliente.acao');
     });
 });
+
+Route::group(['prefix'=>'vendas'],function(){
+    Route::get('/criar', function () {
+        return view('vendas.criar');
+    });
+    Route::get('/acao',function(){
+        return view('vendas.acao');
+    });
+});

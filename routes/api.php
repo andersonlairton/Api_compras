@@ -41,6 +41,7 @@ Route::namespace('Api')->group(function () {
     Route::put('/finalizarvenda/{id}','VendasController@finalizarvenda');
     //itens venda
     Route::post('/adicionarprodutos','ItensVendaController@adicionarproduto');
+    Route::put('/editaritem/{id}','ItensVendaController@editaritem');
     Route::delete('/removerproduto/{venda}/{produto}','ItensVendaController@remover');
     Route::delete('/removerproduto/{venda}','ItensVendaController@remover_todos');
 });
